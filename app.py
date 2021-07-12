@@ -15,8 +15,21 @@
 # 예시1
 # https://velog.io/@gurumagineer/1%EC%B0%A8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9B%84%EA%B8%B0
 
+
+# 예시 3
+# https://corona-live.com/vaccine/
+
+# 템플릿 1
+# https://dashboardpack.com/live-demo-preview/?livedemo=378797
+
+# 템플릿 2
+# https://dashboardpack.com/live-demo-preview/?livedemo=1881?utm_source=colorlib&utm_medium=reactlist&utm_campaign=architectangular
+
 # 달력
 # https://colorlib.com/wp/bootstrap-calendars/
+
+# 기능 참고
+# https://korean.cdc.gov/coronavirus/2019-ncov/index.html
 
 # 지도
 # https://seunghyum.github.io/about/#
@@ -45,8 +58,7 @@ requesturl = "http://api.odcloud.kr/api/15077756/v1/vaccine-stat?page=1&perPage=
 ## HTML 화면 보여주기
 @app.route('/')
 def homework():
-    return render_template('index.html')
-
+    return render_template('test.html')
 
 # (POST) API
 @app.route('/covid', methods=['POST'])

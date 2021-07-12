@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+      <title>COVID19</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
+      <meta name="author" content="Creative Tim">
+      <link rel="icon" href="../static/assets/img/brand/favicon.png" type="image/png">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+      <link rel="stylesheet" href="../static/assets/vendor/nucleo/css/nucleo.css" type="text/css">
+      <link rel="stylesheet" href="../static/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+      <link rel="stylesheet" href="../static/assets/css/argon.css?v=1.2.0" type="text/css">
+
+</head>
+<style>
+         .outer {
+             width:100%;
+             height:100vh;
+            padding:5% 10% 5% 10%;
+             background-color:#fdfdfd;
+        }
+         .navbar{
+             float:left;
+         }
+         .main-content{
+             width:95%;
+             height:100%;
+             background-color:#FFFFFF;
+             float:right;
+         }
+</style>
+<body>
+
+
+<div class="outer">
+
+<div class="sidenav navbar navbar-vertical navbar-expand-xs navbar-light bg-white" style="position:relative; overflow-y:hidden; height:100%;max-width:5% !important;">
+    <nav class="scrollbar-inner">
+      <div class="sidenav-header  align-items-center">
+        <a class="navbar-brand" href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="백신 지도">
+          🗺️
+        </a>
+      </div>
+      <div class="sidenav-header align-items-center">
+          <a class="navbar-brand" href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="거리두기">
+          🌍
+        </a>
+      </div>
+       <div class="sidenav-header align-items-center" data-toggle="tooltip" data-placement="bottom" title="즐겨찾기">
+          <a class="navbar-brand" href="javascript:void(0)">
+          ⭐
+        </a>
+      </div>
+        <div class="sidenav-header align-items-center" data-toggle="tooltip" data-placement="bottom" title="커뮤니티">
+          <a class="navbar-brand" href="javascript:void(0)">
+         💬
+        </a>
+      </div>
+     <div class="sidenav-header align-items-center" data-toggle="tooltip" data-placement="bottom" title="사용자">
+          <a class="navbar-brand" href="javascript:void(0)">
+         👤
+        </a>
+      </div>
+    </nav>
+ </div>
+     <div class="main-content">
+      <div class="left-content" style="width: 50%; height:100%;float:left;">
+        <div id="map" style="width:100%;height:100%;"></div>
+      </div>
+
+      <div class="right-content" style="width:50%; height:100%;padding:0% 2% 0% 2%;float:right;">
+
+
+      </div>
+    </div>
+
+</div>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=39680276698e6bbefe95bf75f5053d16"></script>
+<script>
+		var container = document.getElementById('map');
+		var options = {
+			center: new kakao.maps.LatLng(33.450701, 126.570667),
+			level: 3
+		};
+		var map = new kakao.maps.Map(container, options);
+	</script>
+  <script src="../static/assets/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="../static/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/assets/vendor/js-cookie/js.cookie.js"></script>
+  <script src="../static/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+  <script src="../static/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+  <script src="../static/assets/vendor/chart.js/dist/Chart.min.js"></script>
+  <script src="../static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+  <script src="../static/assets/js/argon.js?v=1.2.0"></script>
+</body>
+</html>
