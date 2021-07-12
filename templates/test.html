@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8"/>
+	<meta charset="UTF-8"/>
       <title>COVID19</title>
-      <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
       <meta name="author" content="Creative Tim">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"/>
       <link rel="icon" href="../static/assets/img/brand/favicon.png" type="image/png">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
       <link rel="stylesheet" href="../static/assets/vendor/nucleo/css/nucleo.css" type="text/css">
@@ -30,7 +31,20 @@
              background-color:#FFFFFF;
              float:right;
          }
+
+
+        .customoverlay {position:relative;bottom:40px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
+        .customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
+        .customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #d95050;background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
+        .customoverlay .title {display:block;text-align:center;background:#fff;margin-right:35px;padding:10px 15px;font-size:14px;font-weight:bold;}
+        .customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+
 </style>
+<script>
+            {#    $(document).ready(function () {#}
+            {#    getCenters();#}
+            {# });#}
+</script>
 <body>
 
 
@@ -79,12 +93,72 @@
 </div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=39680276698e6bbefe95bf75f5053d16"></script>
 <script>
+         function getCenters() {
+		    var result_data;
+                $.ajax({
+                    type: 'GET',
+                    url: '/center',
+                    async: false,
+                    data: {},
+                    success: function (response) {
+                        result_data = response;
+                    }
+                });
+            return result_data;
+        }
+        var centers = getCenters()['centers'];
+
 		var container = document.getElementById('map');
 		var options = {
-			center: new kakao.maps.LatLng(33.450701, 126.570667),
-			level: 3
+			center: new kakao.maps.LatLng(37.566696, 126.977942),
+			level: 7
+
 		};
 		var map = new kakao.maps.Map(container, options);
+
+
+      	var pos=[]
+         for(var i in centers){
+		    pos.push({
+               title:centers[i].facilityName,
+                center:centers[i].centerName,
+               latlng: new kakao.maps.LatLng(centers[i].lat, centers[i].lng)
+            });
+        }
+
+        var imageSrc = "https://image.flaticon.com/icons/png/512/4006/4006511.png";
+
+
+        for (var i = 0; i < pos.length; i ++) {
+
+            var imageSize = new kakao.maps.Size(30,30);
+            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+            var content = '<div class="customoverlay">' +
+            '  <a href="https://map.kakao.com/link/search/'+pos[i].center+'" target=_blank">'+
+            '    <span class="title">'+pos[i].title+'</span>' +
+            '  </a>' +
+            '</div>';
+
+            var marker = new kakao.maps.Marker({
+                map: map,
+                position: pos[i].latlng,
+                title : pos[i].title,
+                image : markerImage
+            });
+
+            var customOverlay = new kakao.maps.CustomOverlay({
+                map: map,
+                position: pos[i].latlng,
+                content: content,
+                yAnchor: 1
+            });
+
+            customOverlay.setMap(map);
+
+
+        }
+
 	</script>
   <script src="../static/assets/vendor/jquery/dist/jquery.min.js"></script>
   <script src="../static/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
