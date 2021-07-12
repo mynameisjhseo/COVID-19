@@ -8162,7 +8162,9 @@ h1, h2, h3, h4, h5,
   background: #2553b8 !important; }
 
 .ftco-section {
-  padding: 10em 0; }
+  padding: 10em 0;
+  background-color: #E0E6E9;
+}
 
 .ftco-no-pt {
   padding-top: 0; }
@@ -8210,7 +8212,7 @@ textarea.form-control {
   width: 100%; }
 
 .contact-wrap {
-  background: #e8edf0; }
+  background: #ffffff; }
 
 .dbox {
   width: 100%;
