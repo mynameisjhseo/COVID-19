@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .container .box_A,
+            .container .box_B {
+                width: 50%;
+                overflow: hidden;
+                height: 100%;
+                -webkit-font-smoothing: antialiased;
+                -webkit-transition: all .3s;
+                -moz-transition: all .3s;
+                -o-transition: all .3s;
+                transition: all .3s;
+            }
+            .container:hover .box_A ,
+            .container:hover .box_B {
+                background-color:red;
+                width: 0%;
+            }
+            .container:hover .box_A:hover ,
+
+            .container:hover .box_B:hover {
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+     <div class="container">
+    <div class="box_A"></div>
+    <div class="box_B"></div>
+    </div>
+    </body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>COVID-19</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"/>
+        <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+        <style>
+            section{
+                height:300px;
+            }
+            .center {
+                text-align: center;
+            }
+
+            .star-list {
+                width: 500px;
+                margin: 20px auto 0 auto;
+            }
+
+            .star-name {
+                display: inline-block;
+            }
+
+            .star-name:hover {
+                text-decoration: underline;
+            }
+
+            .card {
+                margin-bottom: 15px;
+            }
+        </style>
+        <script>
+
+            $(document).ready(function () {
+                showStar();
+            });
+
+            function showStar() {
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://api.odcloud.kr/api/15077756/v1/vaccine-stat?page=1&perPage=10&serviceKey=4MZE91nl58LxJryx5TYngBgW4jTxjLlYQlteJ3kTud9MYYFJKO8khFD%2BeeJRqD%2FQGeT8jlwOJVBASEUXoiborw%3D%3D',
+                    data: {},
+                    success: function (response) {
+                        let stats = response.data;
+                        for (let i = 0; i < stats.length; i++){
+                            let accumulatedFirstCnt = stats[i]['accumulatedFirstCnt']
+                            let accumulatedSecondCnt = stats[i]['accumulatedSecondCnt']
+                            let baseDate = stats[i]['baseDate']
+                            let firstCnt = stats[i]['firstCnt']
+                            let secondCnt = stats[i]['secondCnt']
+                            let sido = stats[i]['sido']
+                            let totalFirstCnt = stats[i]['totalFirstCnt']
+                            let totalSecondCnt = stats[i]['totalSecondCnt']
+                            console.log(accumulatedFirstCnt)
+                            let temp_html = `<div>
+                                                <span>${accumulatedFirstCnt}</span>
+                                                <span>${accumulatedSecondCnt}</span>
+                                                <span>${baseDate}</span>
+                                                <span>${firstCnt}</span>
+                                                <span>${secondCnt}</span>
+                                                <span>${sido}</span>
+                                                <span>${totalFirstCnt}</span>
+                                                <span>${totalSecondCnt}</span>
+                                            </div>`
+                            $('#star-box').append(temp_html)
+                        }
+                    }
+                });
+            }
+
+        </script>
+    </head>
+    <body>
+        <section class="hero is-success">
+            <div class="hero-body">
+                <div class="container center">
+                    <h1 class="title">
+                        코로나 예방접종 현황
+                    </h1>
+                    <h2 class="subtitle">
+
+                    </h2>
+                </div>
+            </div>
+        </section>
+        <div class="star-list" id="star-box">
+        </div>
+    </body>
+</html>
