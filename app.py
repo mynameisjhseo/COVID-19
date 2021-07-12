@@ -1,4 +1,13 @@
 # 공공데이터활용지원센터_코로나19 예방접종 통계 데이터 조회 서비스
+# front-end
+# https://onepagelove.com/huddle
+# https://onepagelove.com/github-contributions
+# https://www.pinterest.co.kr/pin/376543218851337038/
+# https://velog.io/@eunjin/Javascript-Toy-Project-Random-Meal-Generator-%EC%98%A4%EB%8A%98%EB%AD%90%EB%A8%B9%EC%A7%80-%ED%86%A0%EC%9D%B4%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8
+# https://www.pinterest.co.kr/pin/389068855304019276/
+# https://www.pinterest.co.kr/pin/745416175808909677/
+# https://www.pinterest.co.kr/pin/375417318941596349/
+# https://www.pinterest.co.kr/pin/150237337558067764/
 
 # EndPoint
 # https://infuser.odcloud.kr/oas/docs?namespace=15077756/v1
