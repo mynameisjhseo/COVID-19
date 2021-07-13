@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8"/>
       <title>COVID19</title>
+
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
       <meta name="author" content="Creative Tim">
@@ -13,14 +14,16 @@
       <link rel="stylesheet" href="../static/assets/vendor/nucleo/css/nucleo.css" type="text/css">
       <link rel="stylesheet" href="../static/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
       <link rel="stylesheet" href="../static/assets/css/argon.css?v=1.2.0" type="text/css">
+        <link rel="stylesheet" type="text/css" href="../static/jquery/jquery.autocomplete.css" />
+
 
 </head>
 <style>
          .outer {
              width:100%;
              height:100vh;
-            padding:5% 10% 5% 10%;
-             background-color:#fdfdfd;
+            padding:8% 12% 8% 12%;
+             background-color:#FDFDFD;
         }
          .navbar{
              float:left;
@@ -28,53 +31,50 @@
          .main-content{
              width:95%;
              height:100%;
-             background-color:#FFFFFF;
+             background-color:#ffffff;
              float:right;
-         }
+            border-radius: 0px 40px 40px 0px;
+             padding:0px 40px 0px 0px;
+           box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 
+         }
 
         .customoverlay {position:relative;bottom:40px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
         .customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
-        .customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #d95050;background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
+        .customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #01B4FF;background: #01B4FF url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
         .customoverlay .title {display:block;text-align:center;background:#fff;margin-right:35px;padding:10px 15px;font-size:14px;font-weight:bold;}
         .customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
 
 </style>
 <script>
-            {#    $(document).ready(function () {#}
-            {#    getCenters();#}
-            {# });#}
+
+
+
 </script>
 <body>
-
 
 <div class="outer">
 
 <div class="sidenav navbar navbar-vertical navbar-expand-xs navbar-light bg-white" style="position:relative; overflow-y:hidden; height:100%;max-width:5% !important;">
     <nav class="scrollbar-inner">
       <div class="sidenav-header  align-items-center">
-        <a class="navbar-brand" href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="백신 지도">
-          🗺️
+        <a class="navbar-brand" style="background-color:#01B4FF;" href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="백신 지도">
+          <i class="ni ni-map-big"></i>
         </a>
       </div>
       <div class="sidenav-header align-items-center">
-          <a class="navbar-brand" href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="거리두기">
-          🌍
+          <a class="navbar-brand" href="javascript:void(0)" >
+       <i class="ni ni-chart-bar-32"></i>
         </a>
       </div>
-       <div class="sidenav-header align-items-center" data-toggle="tooltip" data-placement="bottom" title="즐겨찾기">
+       <div class="sidenav-header align-items-center">
           <a class="navbar-brand" href="javascript:void(0)">
-          ⭐
+           <i class="ni ni-favourite-28"></i>
         </a>
       </div>
-        <div class="sidenav-header align-items-center" data-toggle="tooltip" data-placement="bottom" title="커뮤니티">
+     <div class="sidenav-header align-items-center" >
           <a class="navbar-brand" href="javascript:void(0)">
-         💬
-        </a>
-      </div>
-     <div class="sidenav-header align-items-center" data-toggle="tooltip" data-placement="bottom" title="사용자">
-          <a class="navbar-brand" href="javascript:void(0)">
-         👤
+         <i class="ni ni-circle-08"></i>
         </a>
       </div>
     </nav>
@@ -84,7 +84,22 @@
         <div id="map" style="width:100%;height:100%;"></div>
       </div>
 
-      <div class="right-content" style="width:50%; height:100%;padding:0% 2% 0% 2%;float:right;">
+      <div class="right-content" style="width:50%; height:100%;padding:3% 1% 0% 3%;float:right;">
+
+         <!-- Search form -->
+          <div class="navbar-search navbar-search-light navbar-dark mr-sm-3" id="navbar-search-main">
+            <div class="form-group mb-0">
+              <div class="input-group input-group-alternative input-group-merge">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-search"></i></span>
+                </div>
+                <input class="form-control" placeholder="가까운 위치를 입력해주세요" type="text">
+              </div>
+            </div>
+            <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
 
 
       </div>
@@ -115,10 +130,11 @@
 
 		};
 		var map = new kakao.maps.Map(container, options);
-
+        var availableTags = [];
 
       	var pos=[]
          for(var i in centers){
+             availableTags.push(centers[i].address);
 		    pos.push({
                title:centers[i].facilityName,
                 center:centers[i].centerName,
@@ -126,7 +142,7 @@
             });
         }
 
-        var imageSrc = "https://image.flaticon.com/icons/png/512/4006/4006511.png";
+        var imageSrc = "https://image.flaticon.com/icons/png/512/839/839066.png";
 
 
         for (var i = 0; i < pos.length; i ++) {
@@ -159,6 +175,23 @@
 
         }
 
+
+         {#var keyword;#}
+         {#$(document).ready(function () {#}
+         {#        $(".form-control").keydown(function(key) {#}
+         {#           if (key.keyCode == 13) {#}
+         {#               keyword = $(".form-control").val();#}
+         {#               showMap();#}
+         {#           }#}
+         {#        });#}
+         {##}
+         {#   });#}
+	$(document).ready(function() {
+	    $(".form-control").autocomplete(availableTags,{
+	        matchContains: true,
+	        selectFirst: false
+	    });
+	});
 	</script>
   <script src="../static/assets/vendor/jquery/dist/jquery.min.js"></script>
   <script src="../static/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -168,5 +201,11 @@
   <script src="../static/assets/vendor/chart.js/dist/Chart.min.js"></script>
   <script src="../static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
   <script src="../static/assets/js/argon.js?v=1.2.0"></script>
+
+<script src="../static/jquery/lib/jquery.js"></script>
+    <script src='../static/jquery/lib/jquery.bgiframe.min.js'></script>
+    <script src='../static/jquery/lib/jquery.ajaxQueue.js'></script>
+    <script src='../static/jquery/jquery.autocomplete.js'></script>
+
 </body>
 </html>

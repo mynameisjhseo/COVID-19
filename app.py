@@ -61,6 +61,16 @@ db = client.dpsparta
 def homework():
     return render_template('test.html')
 
+## HTML 화면 보여주기
+@app.route('/icons')
+def icons():
+    return render_template('./examples/icons.html')
+
+## HTML 화면 보여주기
+@app.route('/backup')
+def backup():
+    return render_template('backup.html')
+
 # (POST) API
 @app.route('/center', methods=['GET'])
 def get_center():
