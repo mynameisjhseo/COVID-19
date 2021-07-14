@@ -43,8 +43,12 @@
 
         .customoverlay {position:relative;bottom:40px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
         .customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
+
         .customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #01B4FF;background: #01B4FF url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
+
         .customoverlay .title {display:block;text-align:center;background:#fff;margin-right:35px;padding:10px 15px;font-size:14px;font-weight:bold;}
+
+        .sidenav-header :hover {background-color:#01B4FF;}
         .customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
 
 </style>
@@ -60,7 +64,7 @@
 <div class="sidenav navbar navbar-vertical navbar-expand-xs navbar-light bg-white" style="position:relative; overflow-y:hidden; height:100%;max-width:5% !important;">
     <nav class="scrollbar-inner">
       <div class="sidenav-header  align-items-center">
-        <a class="navbar-brand" style="background-color:#01B4FF;" href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="백신 지도">
+        <a class="navbar-brand" style="background-color:#01B4FF;" href="javascript:void(0)">
           <i class="ni ni-map-big"></i>
         </a>
       </div>
@@ -89,7 +93,7 @@
       <div class="right-content" style="width:50%; height:100%;padding:3% 1% 0% 3%;float:right;">
 
          <!-- Search form -->
-          <div class="navbar-search navbar-search-light navbar-dark mr-sm-3" id="navbar-search-main">
+          <div class="navbar-search navbar-search-light navbar-dark mr-sm-3" id="navbar-search-main" style="z-index:2;">
             <div class="form-group mb-0">
               <div class="input-group input-group-alternative input-group-merge">
                 <div class="input-group-prepend">
@@ -102,6 +106,21 @@
               <span aria-hidden="true">×</span>
             </button>
           </div>
+
+          <div class="centers" style="z-index:1;margin-top:3%;">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">주소</th>
+                        <th scope="col">기관명</th>
+                        <th scope="col">전화번호</th>
+                        <th scope="col">우편번호</th>
+                    </tr>
+                    </thead>
+                    <tbody id="centers-card">
+                    </tbody>
+                </table>
+            </div>
 
 
       </div>
@@ -127,11 +146,13 @@
 
 		var container = document.getElementById('map');
 		var options = {
-			center: new kakao.maps.LatLng(37.566696, 126.977942),
+			center: new kakao.maps.LatLng( 37.50199847601177,127.09309784685992),
 			level: 7
 
 		};
 		var map = new kakao.maps.Map(container, options);
+		this.getInfo();
+
         var availableTags = [];
 
       	var pos=[]
@@ -200,30 +221,73 @@
                     }
                 }
                 if(isAddress){
-                var moveLatLon = new kakao.maps.LatLng(centerLat,centerLng);
-                map.setCenter(moveLatLon);
+                    var moveLatLon = new kakao.maps.LatLng(centerLat,centerLng);
+                    map.setCenter(moveLatLon);
+                    getInfo();
                 }
          }
 
+        // 자동완성 리스트 검색창 하단에 띄우기 -- autocomplete 사용
+        $(document).ready(function() {
+            $(".form-control").autocomplete(availableTags,{
+                matchContains: true,
+                selectFirst: false
+            });
+        });
 
-	$(document).ready(function() {
-	    $(".form-control").autocomplete(availableTags,{
-	        matchContains: true,
-	        selectFirst: false
-	    });
-	});
+        var searchCenters=[];
+
+         // 카드 목록에 넣을 예방센터 정보 가져오기
+         function getInfo() {
+
+             var bounds = map.getBounds();
+             var swLatLng = bounds.getSouthWest();
+             var neLatLng = bounds.getNorthEast();
+      	     searchCenters=[];
+            console.log(map.getCenter());
+             for (var i in centers) {
+                 var lat = centers[i].lat;
+                 var lng = centers[i].lng;
+                 if (lat >= swLatLng.getLat() && lat <= neLatLng.getLat() && lng >= swLatLng.getLng() && lng <= neLatLng.getLng()) {
+                    searchCenters.push(centers[i]);
+                 }
+              }
+             updateCenters();
+         }
+        // 예방접종 센터 목록 업데이트
+         function updateCenters(){
+
+             $("#centers-card *").remove();
+             for (let i in searchCenters) {
+                 let centerName = searchCenters[i]['centerName'];
+                 let address = searchCenters[i]['address'];
+                 let facilityName = searchCenters[i]['facilityName'];
+                 let phoneNumber = searchCenters[i]['phoneNumber']
+                 let zipCode = searchCenters[i]['zipCode']
+                 let temp_html = `<tr>
+                                                <td>${address}</td>
+                                                <td>${facilityName}</td>
+                                                <td>${phoneNumber}</td>
+                                                <td>${zipCode}</td>
+                                            </tr>`
+                 $('#centers-card').append(temp_html)
+              }
+         }
+
+
 
 	</script>
-  <script src="../static/assets/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="../static/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../static/assets/vendor/js-cookie/js.cookie.js"></script>
-  <script src="../static/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-  <script src="../static/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
-  <script src="../static/assets/vendor/chart.js/dist/Chart.min.js"></script>
-  <script src="../static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
-  <script src="../static/assets/js/argon.js?v=1.2.0"></script>
+      <script src="../static/assets/vendor/jquery/dist/jquery.min.js"></script>
+      <script src="../static/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="../static/assets/vendor/js-cookie/js.cookie.js"></script>
+      <script src="../static/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+      <script src="../static/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+      <script src="../static/assets/vendor/chart.js/dist/Chart.min.js"></script>
+      <script src="../static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+      <script src="../static/assets/js/argon.js?v=1.2.0"></script>
 
-<script src="../static/jquery/lib/jquery.js"></script>
+    <!-- autocomplete js -->
+    <script src="../static/jquery/lib/jquery.js"></script>
     <script src='../static/jquery/lib/jquery.bgiframe.min.js'></script>
     <script src='../static/jquery/lib/jquery.ajaxQueue.js'></script>
     <script src='../static/jquery/jquery.autocomplete.js'></script>
