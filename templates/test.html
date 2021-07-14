@@ -15,10 +15,12 @@
       <link rel="stylesheet" href="../static/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
       <link rel="stylesheet" href="../static/assets/css/argon.css?v=1.2.0" type="text/css">
         <link rel="stylesheet" type="text/css" href="../static/jquery/jquery.autocomplete.css" />
-
-
 </head>
 <style>
+    @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+        body {
+          font-family: "Noto Sans KR", sans-serif !important;
+        }
          .outer {
              width:100%;
              height:100vh;
@@ -175,23 +177,42 @@
 
         }
 
+         var keyword;
+         $(document).ready(function () {
+                 $(".form-control").keydown(function(key) {
+                    if (key.keyCode == 13) {
+                        keyword = $(".form-control").val();
+                        showMap(keyword);
+                    }
+                 });
 
-         {#var keyword;#}
-         {#$(document).ready(function () {#}
-         {#        $(".form-control").keydown(function(key) {#}
-         {#           if (key.keyCode == 13) {#}
-         {#               keyword = $(".form-control").val();#}
-         {#               showMap();#}
-         {#           }#}
-         {#        });#}
-         {##}
-         {#   });#}
+            });
+         var centerLat = 37.566696;
+         var centerLng = 126.977942;
+         function showMap(keyword){
+             var isAddress = false;
+            for(var i in centers){
+                if(keyword == centers[i].address){
+                    centerLat = centers[i].lat;
+                    centerLng = centers[i].lng;
+                    isAddress = true;
+                    break;
+                    }
+                }
+                if(isAddress){
+                var moveLatLon = new kakao.maps.LatLng(centerLat,centerLng);
+                map.setCenter(moveLatLon);
+                }
+         }
+
+
 	$(document).ready(function() {
 	    $(".form-control").autocomplete(availableTags,{
 	        matchContains: true,
 	        selectFirst: false
 	    });
 	});
+
 	</script>
   <script src="../static/assets/vendor/jquery/dist/jquery.min.js"></script>
   <script src="../static/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

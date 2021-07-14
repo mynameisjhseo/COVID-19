@@ -1,10 +1,11 @@
+ @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
 .ac_results {
-	padding: 10px;
-	margin:0 0 0 -1%;
-	border: 1px solid #f2f2f2;
-	background-color: white;
+	padding: 4% 20px 10px 20px;
+	margin:-3% -10% 0 -2%;
+	box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 	overflow: hidden;
-	z-index: 99999;
+	border-radius :  40px;
 }
 
 .ac_results ul {
@@ -16,6 +17,7 @@
 }
 
 .ac_results li {
+	color:dimgray;
 	margin: 0px;
 	padding: 2px 5px;
 	cursor: default;
@@ -25,13 +27,13 @@
 	when scroll mode will be used
 	*/
 	/*width: 100%;*/
-	font: menu;
-	font-size: 14px;
+	font-family: "Noto Sans KR", sans-serif !important;
+	font-size: 15px;
 	/* 
 	it is very important, if line-height not setted or setted 
 	in relative units scroll will be broken in firefox
 	*/
-	line-height: 16px;
+	line-height: 32px;
 	overflow: hidden;
 }
 
@@ -43,5 +45,6 @@
 }
 
 .ac_over {
+	background-color:#f2f2f2;
 	color: black;
 }
