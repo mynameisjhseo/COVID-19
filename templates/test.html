@@ -51,6 +51,10 @@
         .sidenav-header :hover {background-color:#01B4FF;}
         .customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
 
+        #centers-card tr:hover{
+            background-color: #f2f2f2;
+            cursor: pointer;
+        }
 </style>
 <script>
 
@@ -73,16 +77,6 @@
        <i class="ni ni-chart-bar-32"></i>
         </a>
       </div>
-       <div class="sidenav-header align-items-center">
-          <a class="navbar-brand" href="javascript:void(0)">
-           <i class="ni ni-favourite-28"></i>
-        </a>
-      </div>
-     <div class="sidenav-header align-items-center" >
-          <a class="navbar-brand" href="javascript:void(0)">
-         <i class="ni ni-circle-08"></i>
-        </a>
-      </div>
     </nav>
  </div>
      <div class="main-content">
@@ -99,7 +93,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-search"></i></span>
                 </div>
-                <input class="form-control" placeholder="가까운 위치를 입력해주세요" type="text">
+                <input class="form-control" placeholder="위치를 입력하여 가까운 코로나 예방접종센터를 찾아보세요!" type="text">
               </div>
             </div>
             <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
@@ -258,22 +252,27 @@
          function updateCenters(){
 
              $("#centers-card *").remove();
+             //let count =0;
              for (let i in searchCenters) {
+                 {#if(count==9){#}
+                 {#    break;#}
+                 {# }#}
                  let centerName = searchCenters[i]['centerName'];
                  let address = searchCenters[i]['address'];
                  let facilityName = searchCenters[i]['facilityName'];
                  let phoneNumber = searchCenters[i]['phoneNumber']
                  let zipCode = searchCenters[i]['zipCode']
-                 let temp_html = `<tr>
+
+                 let temp_html = `<tr onClick="window.open('https://map.kakao.com/link/search/${centerName}','','')">
                                                 <td>${address}</td>
                                                 <td>${facilityName}</td>
                                                 <td>${phoneNumber}</td>
                                                 <td>${zipCode}</td>
                                             </tr>`
                  $('#centers-card').append(temp_html)
+                 {# count = count+1;#}
               }
          }
-
 
 
 	</script>
