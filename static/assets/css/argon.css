@@ -22412,7 +22412,7 @@ textarea[resize='horizontal']
 
 .navbar-search .form-control
 {
-    width:530px;
+    width:580px;
     transition: all .15s cubic-bezier(.68, -.55, .265, 1.55); 
 
     border: 0;
@@ -22500,10 +22500,10 @@ textarea[resize='horizontal']
 {
     .navbar-search
     {
-        display: none;
-
+        display: initial;
         width: 100%;
-
+        margin-top:1vh;
+        z-index:9999;
         transition: all .15s cubic-bezier(.68, -.55, .265, 1.55); 
         transform: translateX(-150%);
     }

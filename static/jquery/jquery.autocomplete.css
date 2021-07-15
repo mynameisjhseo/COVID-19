@@ -49,3 +49,29 @@
 	background-color:#f2f2f2;
 	color: black;
 }
+
+ @media ( max-width: 480px ) {
+
+
+.ac_results {
+	margin:0% 0 0 -3%;
+	box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+	overflow: hidden;
+	border-radius :  0 0 40px 40px;
+	background-color:white;
+}
+
+
+	 .ac_results li {
+	color:dimgray;
+	margin: 0px;
+	padding: 2px 5px;
+	cursor: default;
+	display: block;
+
+	font-family: "Noto Sans KR", sans-serif !important;
+	font-size: 12px;
+	line-height: 32px;
+	overflow: hidden;
+}
+ }

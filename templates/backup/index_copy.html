@@ -24,27 +24,36 @@
          .outer {
              width:100%;
              height:100vh;
-            padding:8% 12% 9% 12%;
+            padding:8% 12% 8% 12%;
              background-color:#FDFDFD;
         }
-         .navsearch{
-             z-index:2;display: inline-block;
+         .navclass{
+             position:relative; overflow-y:hidden; height:100%;max-width:5% !important;
+         }
+         .navbar{
+             float:left;
+         }
+         .nav-blue {
+            background-color:#01B4FF;
+         }
+         .nav-white {
+            background-color:white;
          }
          .main-content{
-             width:100%;
+             width:95%;
              height:100%;
              background-color:#ffffff;
              float:right;
+            border-radius: 0px 40px 40px 0px;
              padding:0px 40px 0px 0px;
            box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 
          }
          .left-content{
              width: 50%; height:100%;float:left;
-             border-radius: 40px 0px 0px 40px;
          }
          .right-content{
-             width:50%; height:100%;padding:3% 0% 0% 3%;float:right;
+             width:50%; height:100%;padding:3% 1% 0% 3%;float:right;
          }
          .sub-content{
              width:100%;
@@ -64,13 +73,6 @@
             background-color: #f2f2f2;
             cursor: pointer;
         }
-         table{
-               width: 100%;
-              table-layout: fixed;
-         }
-         .table td{
-             text-overflow: ellipsis; white-space: nowrap; overflow: hidden;
-         }
         .customoverlay {position:relative;bottom:40px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
         .customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
         .customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #01B4FF;background: #01B4FF url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
@@ -80,31 +82,14 @@
 
 
         @media ( max-width: 480px ) {
-
+            .navclass{
+                display:none;
+             }
             .main-content{
-                margin-top:2vh;
-                padding:0;
-                width:100%;
-                box-shadow:none;
+             width:95%;
+             background-color:olive;
 
             }
-             .left-content{
-             width: 100%; height:50%;
-             }
-             .right-content{
-                 margin-top:2vh;
-                 padding:0;
-                 width:100%; height:auto;
-             }
-             .table{
-                 margin-top:-1vh;
-                 width:95%;
-             }
-             .table td{
-
-                 font-size:12px;
-             }
-
         }
 </style>
 <script>
@@ -115,13 +100,28 @@
 <body>
 
 <div class="outer">
+
+<div class="sidenav navbar navbar-vertical navbar-expand-xs navbar-light bg-white navclass">
+    <nav class="scrollbar-inner">
+      <div class="sidenav-header  align-items-center">
+        <a class="navbar-brand nav-blue first-nav" href="javascript:void(0)">
+          <i class="ni ni-map-big"></i>
+        </a>
+      </div>
+      <div class="sidenav-header align-items-center">
+          <a class="navbar-brand nav-white second-nav" href="javascript:void(0)" >
+       <i class="ni ni-chart-bar-32"></i>
+        </a>
+      </div>
+    </nav>
+ </div>
      <div class="main-content">
       <div class="left-content">
         <div id="map" style="width:100%;height:100%;"></div>
       </div>
       <div class="right-content">
          <!-- Search form -->
-          <div class="navbar-search navbar-search-light navbar-dark mr-sm-3" id="navbar-search-main">
+          <div class="navbar-search navbar-search-light navbar-dark mr-sm-3" id="navbar-search-main" style="z-index:2;display: inline-block;">
             <div class="form-group mb-0" style="width:100%;">
               <div class="input-group input-group-alternative input-group-merge">
                 <div class="input-group-prepend">
@@ -134,8 +134,10 @@
               <span aria-hidden="true">×</span>
             </button>
           </div>
+
           <div class="centers" style="z-index:1;margin-top:3%;width:95%">
-                <table class="table">
+                <table class="table" style="  width: 100%;
+  table-layout: fixed;">
 
                     <col style="width: 40%;" />
                     <col style="width: 30%;" />
