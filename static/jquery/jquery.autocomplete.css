@@ -1,12 +1,13 @@
  @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 
 .ac_results {
-	padding: 4% 20px 10px 20px;
-	margin:-3% -10% 0 -2%;
+	padding: 0% 20px 10px 20px;
+	margin:0% -4% 0 -1%;
 	box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 	overflow: hidden;
-	border-radius :  40px;
+	border-radius :  0 0 40px 40px;
 	background-color:white;
+	width:500px;
 }
 
 .ac_results ul {
@@ -39,7 +40,6 @@
 }
 
 .ac_loading {
-	background: white url('indicator.gif') right center no-repeat;
 }
 
 .ac_odd {

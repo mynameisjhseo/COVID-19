@@ -30,6 +30,12 @@
          .navbar{
              float:left;
          }
+         .nav-blue {
+            background-color:#01B4FF;
+         }
+         .nav-white {
+            background-color:white;
+         }
          .main-content{
              width:95%;
              height:100%;
@@ -40,21 +46,38 @@
            box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 
          }
-
-        .customoverlay {position:relative;bottom:40px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
-        .customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
-
-        .customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #01B4FF;background: #01B4FF url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
-
-        .customoverlay .title {display:block;text-align:center;background:#fff;margin-right:35px;padding:10px 15px;font-size:14px;font-weight:bold;}
-
-        .sidenav-header :hover {background-color:#01B4FF;}
-        .customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
-
-        #centers-card tr:hover{
+         .left-content{
+             width: 50%; height:100%;float:left;
+         }
+         .right-content{
+             width:50%; height:100%;padding:3% 1% 0% 3%;float:right;
+         }
+         .sub-content{
+             width:100%;
+             height:100%;
+             float:right;
+              background-color:#ffffff;
+            border-radius: 0px 40px 40px 0px;
+             padding:5% 40px 0px 0px;
+           box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+         }
+         .hide{
+             display:none;
+         }
+         .search-icon{
+             cursor:pointer;
+         }
+         #centers-card tr:hover{
             background-color: #f2f2f2;
             cursor: pointer;
         }
+        .customoverlay {position:relative;bottom:40px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
+        .customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
+        .customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #01B4FF;background: #01B4FF url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
+        .customoverlay .title {display:block;text-align:center;background:#fff;margin-right:35px;padding:10px 15px;font-size:14px;font-weight:bold;}
+        .sidenav-header :hover {background-color:#01B4FF;}
+        .customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+
 </style>
 <script>
 
@@ -68,30 +91,28 @@
 <div class="sidenav navbar navbar-vertical navbar-expand-xs navbar-light bg-white" style="position:relative; overflow-y:hidden; height:100%;max-width:5% !important;">
     <nav class="scrollbar-inner">
       <div class="sidenav-header  align-items-center">
-        <a class="navbar-brand" style="background-color:#01B4FF;" href="javascript:void(0)">
+        <a class="navbar-brand nav-blue first-nav" href="javascript:void(0)">
           <i class="ni ni-map-big"></i>
         </a>
       </div>
       <div class="sidenav-header align-items-center">
-          <a class="navbar-brand" href="javascript:void(0)" >
+          <a class="navbar-brand nav-white second-nav" href="javascript:void(0)" >
        <i class="ni ni-chart-bar-32"></i>
         </a>
       </div>
     </nav>
  </div>
      <div class="main-content">
-      <div class="left-content" style="width: 50%; height:100%;float:left;">
+      <div class="left-content">
         <div id="map" style="width:100%;height:100%;"></div>
       </div>
-
-      <div class="right-content" style="width:50%; height:100%;padding:3% 1% 0% 3%;float:right;">
-
+      <div class="right-content">
          <!-- Search form -->
-          <div class="navbar-search navbar-search-light navbar-dark mr-sm-3" id="navbar-search-main" style="z-index:2;">
-            <div class="form-group mb-0">
+          <div class="navbar-search navbar-search-light navbar-dark mr-sm-3" id="navbar-search-main" style="z-index:2;display: inline-block;">
+            <div class="form-group mb-0" style="width:100%;">
               <div class="input-group input-group-alternative input-group-merge">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-search"></i></span>
+                  <span class="input-group-text"><i class="fas fa-search search-icon" onclick="searchKeyword();"></i></span>
                 </div>
                 <input class="form-control" placeholder="위치를 입력하여 가까운 코로나 예방접종센터를 찾아보세요!" type="text">
               </div>
@@ -101,20 +122,90 @@
             </button>
           </div>
 
-          <div class="centers" style="z-index:1;margin-top:3%;">
-                <table class="table">
+          <div class="centers" style="z-index:1;margin-top:3%;width:95%">
+                <table class="table" style="  width: 100%;
+  table-layout: fixed;">
+
+                    <col style="width: 40%;" />
+                    <col style="width: 30%;" />
+                    <col style="width: 20%;" />
+                    <col style="width: 10%;" />
                     <thead>
                     <tr>
                         <th scope="col">주소</th>
                         <th scope="col">기관명</th>
                         <th scope="col">전화번호</th>
                         <th scope="col">우편번호</th>
-                    </tr>
+                   </tr>
                     </thead>
                     <tbody id="centers-card">
                     </tbody>
                 </table>
+
             </div>
+
+
+      </div>
+
+      <div class="sub-content hide">
+
+   <div class="container-fluid">
+      <div class="row">
+        <div class="col-xl-8">
+          <div class="card bg-default">
+            <div class="card-header bg-transparent">
+              <div class="row align-items-center">
+
+           <div class="col">
+                  <ul class="nav nav-pills justify-content-end">
+                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales-dark" data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}' data-prefix="$" data-suffix="k">
+                      <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
+                        <span class="d-none d-md-block">Month</span>
+                        <span class="d-md-none">M</span>
+                      </a>
+                    </li>
+                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales-dark" data-update='{"data":{"datasets":[{"data":[0, 20, 5, 25, 10, 30, 15, 40, 40]}]}}' data-prefix="$" data-suffix="k">
+                      <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
+                        <span class="d-none d-md-block">Week</span>
+                        <span class="d-md-none">W</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div></div>
+
+             <div class="card-body">
+              <!-- Chart -->
+              <div class="chart">
+                <!-- Chart wrapper -->
+                <canvas id="chart-sales-dark" class="chart-canvas"></canvas>
+              </div>
+            </div>
+
+          </div>
+        </div>
+          <div class="col-xl-4">
+          <div class="card">
+            <div class="card-header bg-transparent">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
+                  <h5 class="h3 mb-0">Total orders</h5>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <!-- Chart -->
+              <div class="chart">
+                <canvas id="chart-bars" class="chart-canvas"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+   </div>
 
 
       </div>
@@ -196,12 +287,16 @@
          $(document).ready(function () {
                  $(".form-control").keydown(function(key) {
                     if (key.keyCode == 13) {
-                        keyword = $(".form-control").val();
-                        showMap(keyword);
+                        searchKeyword();
                     }
                  });
 
             });
+
+         function searchKeyword(){
+             keyword = $(".form-control").val();
+             showMap(keyword);
+         }
          var centerLat = 37.566696;
          var centerLng = 126.977942;
          function showMap(keyword){
@@ -252,11 +347,10 @@
          function updateCenters(){
 
              $("#centers-card *").remove();
-             //let count =0;
+             let count =0;
              for (let i in searchCenters) {
-                 {#if(count==9){#}
-                 {#    break;#}
-                 {# }#}
+                 if(count>=9)
+                     break;
                  let centerName = searchCenters[i]['centerName'];
                  let address = searchCenters[i]['address'];
                  let facilityName = searchCenters[i]['facilityName'];
@@ -270,17 +364,37 @@
                                                 <td>${zipCode}</td>
                                             </tr>`
                  $('#centers-card').append(temp_html)
-                 {# count = count+1;#}
+                  count = count+1;
               }
+
          }
 
+        $('.first-nav').click(function(){
+            $(this).removeClass('nav-white');
+            $(this).addClass('nav-blue');
+            $('.second-nav').removeClass('nav-blue');
+            $('.second-nav').addClass('nav-white');
+            $('.left-content').removeClass('hide');
+            $('.right-content').removeClass('hide');
+            $('.sub-content').addClass('hide');
+          });
+
+        $('.second-nav').click(function(){
+            $(this).removeClass('nav-white');
+            $(this).addClass('nav-blue');
+            $('.first-nav').removeClass('nav-blue');
+            $('.first-nav').addClass('nav-white');
+            $('.left-content').addClass('hide');
+            $('.right-content').addClass('hide');
+            $('.sub-content').removeClass('hide');
+          });
 
 	</script>
       <script src="../static/assets/vendor/jquery/dist/jquery.min.js"></script>
-      <script src="../static/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+{#      <script src="../static/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>#}
       <script src="../static/assets/vendor/js-cookie/js.cookie.js"></script>
       <script src="../static/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-      <script src="../static/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+{#      <script src="../static/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>#}
       <script src="../static/assets/vendor/chart.js/dist/Chart.min.js"></script>
       <script src="../static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
       <script src="../static/assets/js/argon.js?v=1.2.0"></script>
