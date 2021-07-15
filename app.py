@@ -11,13 +11,7 @@ db = client.dpsparta
 ## HTML 화면 보여주기
 @app.route('/')
 def homework():
-    return render_template('test.html')
-
-## HTML 화면 보여주기
-@app.route('/backup')
-
-def backup():
-    return render_template('backup.html')
+    return render_template('index.html')
 
 # (POST) API
 @app.route('/center', methods=['GET'])
