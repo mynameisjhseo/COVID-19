@@ -22412,8 +22412,7 @@ textarea[resize='horizontal']
 
 .navbar-search .form-control
 {
-    width: 250px;
-
+    width:530px;
     transition: all .15s cubic-bezier(.68, -.55, .265, 1.55); 
 
     border: 0;
@@ -22429,7 +22428,7 @@ textarea[resize='horizontal']
 
 .navbar-search .focused .input-group .form-control
 {
-    width: 380px;
+
 }
 
 .navbar-search .close
