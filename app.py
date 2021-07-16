@@ -5,6 +5,7 @@ import requests
 import json
 
 app = Flask(__name__)
+# client = MongoClient('mongodb://test:test@localhost', 27017)
 client = MongoClient('localhost', 27017)
 db = client.dpsparta
 

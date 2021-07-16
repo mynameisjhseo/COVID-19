@@ -67,9 +67,11 @@
          table{
                width: 100%;
               table-layout: fixed;
+
          }
          .table td{
              text-overflow: ellipsis; white-space: nowrap; overflow: hidden;
+             padding-right:0px;
          }
         .customoverlay {position:relative;bottom:40px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
         .customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
@@ -125,7 +127,7 @@
             <div class="form-group mb-0" style="width:100%;">
               <div class="input-group input-group-alternative input-group-merge">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-search search-icon" onclick="searchKeyword();"></i></span>
+                  <span class="input-group-text"><i class="fas fa-search search-icon" onclick="searchKeyword(); "data-toggle="tooltip" data-placement="top" title="10KM 반경의 예방접종센터 정보를 알려드립니다 🔍" ></i></span>
                 </div>
                 <input class="form-control" placeholder="위치를 입력하여 가까운 코로나 예방접종센터를 찾아보세요!" type="text">
               </div>
@@ -155,74 +157,14 @@
 
             </div>
 
-
       </div>
 
-      <div class="sub-content hide">
-
-   <div class="container-fluid">
-      <div class="row">
-        <div class="col-xl-8">
-          <div class="card bg-default">
-            <div class="card-header bg-transparent">
-              <div class="row align-items-center">
-
-           <div class="col">
-                  <ul class="nav nav-pills justify-content-end">
-                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales-dark" data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}' data-prefix="$" data-suffix="k">
-                      <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
-                        <span class="d-none d-md-block">Month</span>
-                        <span class="d-md-none">M</span>
-                      </a>
-                    </li>
-                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales-dark" data-update='{"data":{"datasets":[{"data":[0, 20, 5, 25, 10, 30, 15, 40, 40]}]}}' data-prefix="$" data-suffix="k">
-                      <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
-                        <span class="d-none d-md-block">Week</span>
-                        <span class="d-md-none">W</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div></div>
-
-             <div class="card-body">
-              <!-- Chart -->
-              <div class="chart">
-                <!-- Chart wrapper -->
-                <canvas id="chart-sales-dark" class="chart-canvas"></canvas>
-              </div>
-            </div>
-
-          </div>
-        </div>
-          <div class="col-xl-4">
-          <div class="card">
-            <div class="card-header bg-transparent">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
-                  <h5 class="h3 mb-0">Total orders</h5>
-                </div>
-              </div>
-            </div>
-            <div class="card-body">
-              <!-- Chart -->
-              <div class="chart">
-                <canvas id="chart-bars" class="chart-canvas"></canvas>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-      </div>
-   </div>
-
-
-      </div>
     </div>
 
 </div>
+
+
+
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=39680276698e6bbefe95bf75f5053d16"></script>
 <script>
          function getCenters() {
@@ -303,7 +245,13 @@
                  });
 
             });
-
+        // 지도가 이동, 확대, 축소로 인해 지도영역이 변경되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
+        kakao.maps.event.addListener(map, 'dragend', function() {
+            getInfo();
+        });
+        kakao.maps.event.addListener(map, 'zoom_changed', function() {
+            getInfo();
+        });
          function searchKeyword(){
              keyword = $(".form-control").val();
              showMap(keyword);
@@ -323,6 +271,7 @@
                 if(isAddress){
                     var moveLatLon = new kakao.maps.LatLng(centerLat,centerLng);
                     map.setCenter(moveLatLon);
+                    map.setLevel(7);
                     getInfo();
                 }
          }
@@ -364,10 +313,11 @@
                  let centerName = searchCenters[i]['centerName'];
                  let address = searchCenters[i]['address'];
                  let facilityName = searchCenters[i]['facilityName'];
-                 let phoneNumber = searchCenters[i]['phoneNumber']
-                 let zipCode = searchCenters[i]['zipCode']
+                 let phoneNumber = searchCenters[i]['phoneNumber'];
+                 let zipCode = searchCenters[i]['zipCode'];
+                 let id = searchCenters[i]['id'];
 
-                 let temp_html = `<tr onClick="window.open('https://map.kakao.com/link/search/${centerName}','','')">
+                 let temp_html = `<tr >
                                                 <td>${address}</td>
                                                 <td>${facilityName}</td>
                                                 <td>${phoneNumber}</td>
@@ -401,7 +351,7 @@
 
 	</script>
       <script src="../static/assets/vendor/jquery/dist/jquery.min.js"></script>
-{#      <script src="../static/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>#}
+      <script src="../static/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
       <script src="../static/assets/vendor/js-cookie/js.cookie.js"></script>
       <script src="../static/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
 {#      <script src="../static/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>#}
